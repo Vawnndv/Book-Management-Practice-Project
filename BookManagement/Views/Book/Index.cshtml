@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<BookManagement.Models.Book>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Book Management";
 }
 
 <div class="my-3 d-md-flex justify-content-between">
-    <h2>Books</h2>
+    <h2>Book Management</h2>
 
     <a href="@Url.Action("Create", "Book")" class="btn btn-primary my-1">Create</a>
 </div>
@@ -28,7 +29,7 @@
                 <td>@book.PublishedDate.ToString("yyyy-MM-dd")</td>
                 <td>@book.Price.ToString("C")</td>
                 <td>
-                    <a href="@Url.Action("Edit", "Book", new { id = book.Id })" class="btn btn-warning">Edit</a>
+                    <a href="@Url.Action("Edit", "Book", new { id = book.Id, page = ViewBag.CurrentPage })" class="btn btn-warning">Edit</a>
                     <a href="@Url.Action("Delete", "Book", new { id = book.Id })" class="btn btn-danger">Delete</a>
                 </td>
             </tr>

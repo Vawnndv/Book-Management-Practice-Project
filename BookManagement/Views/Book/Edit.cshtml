@@ -1,6 +1,7 @@
 ﻿@model BookManagement.Models.Book
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit Book";
 }
 
 <h2>Edit book</h2>
@@ -36,3 +37,5 @@
     <button type="submit" class="btn btn-primary mt-3">Update</button>
     <a href="@Url.Action("Index", "Book")" class="btn btn-default mt-3">Cancel</a>
 }
+
+<input type="hidden" name="page" value="@ViewBag.CurrentPage" />

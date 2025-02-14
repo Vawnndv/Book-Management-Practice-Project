@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.UI;
 using BookManagement.Models;
 
 namespace BookManagement.Controllers
@@ -14,7 +16,7 @@ namespace BookManagement.Controllers
         public ActionResult Index(int page = 1)
         {
             int pageSize = 5;
-            var books = db.Books.OrderBy(b => b.Title).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var books = db.Books.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)db.Books.Count() / pageSize);
             return View(books);
@@ -29,7 +31,7 @@ namespace BookManagement.Controllers
         // POST: Book/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Author,PublishedDate,Price")] Book book)
+        public ActionResult Create(Book book)
         {
             if (ModelState.IsValid)
             {
@@ -42,7 +44,7 @@ namespace BookManagement.Controllers
         }
 
         // GET: Book/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, int page = 1)
         {
             if (id == null)
             {
@@ -55,19 +57,21 @@ namespace BookManagement.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.CurrentPage = page;
+
             return View(book);
         }
 
         // POST: Book/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Author,PublishedDate,Price")] Book book)
+        public ActionResult Edit(Book book, int page = 1)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { page = page });
             }
 
             return View(book);
