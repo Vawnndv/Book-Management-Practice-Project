@@ -76,11 +76,11 @@
         var bookTitle = $(this).data('title');
 
         $('#deleteConfirmationModal').modal('show');
-        
+
         $('#deleteConfirmationModal').data('id', bookId);
         $('#deleteConfirmationModal').data('title', bookTitle);
         // Update title in modal
-        $('#deleteConfirmationModal .modal-body strong').text(bookTitle);
+        $('#deleteConfirmationModal .title-confirm-delete strong').text(bookTitle);
     });
 
     $('#confirmDelete').click(function () {
@@ -97,6 +97,10 @@
                 alert('Error: ' + error);
             }
         });
+    });
+
+    $('.cancelDelete').click(function () {
+        $('#deleteConfirmationModal').modal('hide');
     });
 </script>
 }
