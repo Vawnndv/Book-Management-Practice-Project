@@ -26,9 +26,4 @@ namespace BookManagement.Models
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
     }
-
-    public class BookDbContext : DbContext
-    {
-        public DbSet<Book> Books { get; set; }
-    }
 }

@@ -5,7 +5,7 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BookManagement.Models.BookDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<BookManagement.Data.BookDbContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@
             ContextKey = "BookManagement.Models.BookDbContext";
         }
 
-        protected override void Seed(BookManagement.Models.BookDbContext context)
+        protected override void Seed(BookManagement.Data.BookDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
