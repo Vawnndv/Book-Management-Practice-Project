@@ -1,11 +1,11 @@
-﻿namespace BookManagement.Migrations
+﻿namespace Infrastructure.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BookManagement.Data.BookDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Infrastructure.Data.BookDbContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@
             ContextKey = "BookManagement.Models.BookDbContext";
         }
 
-        protected override void Seed(BookManagement.Data.BookDbContext context)
+        protected override void Seed(Infrastructure.Data.BookDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

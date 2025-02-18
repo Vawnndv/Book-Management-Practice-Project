@@ -1,4 +1,4 @@
-﻿namespace BookManagement.Migrations
+﻿namespace Infrastructure.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

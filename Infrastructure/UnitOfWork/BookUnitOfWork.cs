@@ -1,8 +1,8 @@
-﻿using BookManagement.Data;
-using BookManagement.Interfaces;
-using BookManagement.Repository;
+﻿using Infrastructure.Data;
+using Infrastructure.Interfaces;
+using Infrastructure.Repository;
 
-namespace BookManagement.UnitOfWork
+namespace Infrastructure.UnitOfWork
 {
     public class BookUnitOfWork : IUnitOfWork
     {

@@ -1,30 +1,25 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.UI;
-using BookManagement.Data;
-using BookManagement.Models;
-using BookManagement.Interfaces;
+using Models.Models;
+using Services.Interfaces;
 
 namespace BookManagement.Controllers
 {
     public class BookController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IBookService _bookService;
 
-        public BookController(IUnitOfWork unitOfWork)
+        public BookController(IBookService bookService)
         {
-            _unitOfWork = unitOfWork;
+            _bookService = bookService;
         }
 
         // GET: Book
         public ActionResult Index(int page = 1)
         {
-            var books = _unitOfWork.BookRepository.GetBooksWithPagination(page, Constants.PageSize);
-
-            int totalBooks = _unitOfWork.BookRepository.GetTotalBooksCount();
+            var books = _bookService.GetBooksWithPagination(page, Constants.PageSize);
+            int totalBooks = _bookService.GetTotalBooksCount();
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalBooks / Constants.PageSize);
@@ -45,8 +40,7 @@ namespace BookManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.BookRepository.Add(book);
-                _unitOfWork.Complete();
+                _bookService.AddBook(book);
                 return RedirectToAction("Index");
             }
 
@@ -61,14 +55,13 @@ namespace BookManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Book book = _unitOfWork.BookRepository.GetById(id.Value);
+            Book book = _bookService.GetBookById(id.Value);
             if (book == null)
             {
                 return HttpNotFound();
             }
 
             ViewBag.CurrentPage = page;
-
             return View(book);
         }
 
@@ -79,8 +72,7 @@ namespace BookManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.BookRepository.Update(book);
-                _unitOfWork.Complete();
+                _bookService.UpdateBook(book);
                 return RedirectToAction("Index", new { page = page });
             }
 
@@ -95,7 +87,7 @@ namespace BookManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Book book = _unitOfWork.BookRepository.GetById(id.Value);
+            Book book = _bookService.GetBookById(id.Value);
             if (book == null)
             {
                 return HttpNotFound();
@@ -108,8 +100,7 @@ namespace BookManagement.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            _unitOfWork.BookRepository.Remove(id);
-            _unitOfWork.Complete();
+            _bookService.DeleteBook(id);
             return RedirectToAction("Index");
         }
     }

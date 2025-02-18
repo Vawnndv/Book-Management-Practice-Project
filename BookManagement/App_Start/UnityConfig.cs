@@ -1,6 +1,8 @@
-using BookManagement.Interfaces;
-using BookManagement.Repository;
-using BookManagement.UnitOfWork;
+using Infrastructure.Interfaces;
+using Infrastructure.Repository;
+using Infrastructure.UnitOfWork;
+using Services.Interfaces;
+using Services.Services;
 using System.Web.Mvc;
 using Unity;
 using Unity.Mvc5;
@@ -15,6 +17,7 @@ namespace BookManagement
 
             container.RegisterType<IBookRepository, BookRepository>();
             container.RegisterType<IUnitOfWork, BookUnitOfWork>();
+            container.RegisterType<IBookService, BookService>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

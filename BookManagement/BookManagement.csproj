@@ -148,30 +148,10 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Data\BookDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\IBookRepository.cs" />
-    <Compile Include="Migrations\202502130653477_InitialCreate.cs" />
-    <Compile Include="Migrations\202502130653477_InitialCreate.Designer.cs">
-      <DependentUpon>202502130653477_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202502130658172_InitialCreate1.cs" />
-    <Compile Include="Migrations\202502130658172_InitialCreate1.Designer.cs">
-      <DependentUpon>202502130658172_InitialCreate1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202502130747509_InitialCurrency.cs" />
-    <Compile Include="Migrations\202502130747509_InitialCurrency.Designer.cs">
-      <DependentUpon>202502130747509_InitialCurrency.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Book.cs" />
-    <Compile Include="Models\Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\BookRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="UnitOfWork\BookUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -261,15 +241,21 @@
     <Content Include="Scripts\jquery-3.7.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202502130653477_InitialCreate.resx">
-      <DependentUpon>202502130653477_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202502130658172_InitialCreate1.resx">
-      <DependentUpon>202502130658172_InitialCreate1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202502130747509_InitialCurrency.resx">
-      <DependentUpon>202502130747509_InitialCurrency.cs</DependentUpon>
-    </EmbeddedResource>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{ffd21208-22e6-4bc9-afad-976d62b7c2de}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{ea330c9a-34d2-4240-89fa-b5c6a6a68cfa}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{f6df78cf-70d1-43f4-9be5-14196ed05a00}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

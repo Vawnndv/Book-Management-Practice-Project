@@ -1,11 +1,11 @@
-﻿using BookManagement.Data;
-using BookManagement.Interfaces;
-using BookManagement.Models;
+﻿using Infrastructure.Data;
+using Infrastructure.Interfaces;
+using Models.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace BookManagement.Repository
+namespace Infrastructure.Repository
 {
     public class BookRepository : IBookRepository
     {

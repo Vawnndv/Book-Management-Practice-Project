@@ -1,10 +1,10 @@
-﻿using BookManagement.Models;
+﻿using Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BookManagement.Interfaces
+namespace Infrastructure.Interfaces
 {
     public interface IBookRepository
     {
