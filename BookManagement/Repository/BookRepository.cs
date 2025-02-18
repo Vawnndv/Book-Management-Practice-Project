@@ -26,23 +26,27 @@ namespace BookManagement.Repository
             return _context.Books.Find(id);
         }
 
-        public void Add(Book book)
+        public Book Add(Book book)
         {
             _context.Books.Add(book);
+            return book;
         }
 
-        public void Update(Book book)
+        public Book Update(Book book)
         {
             _context.Entry(book).State = EntityState.Modified;
+            return book;
         }
 
-        public void Remove(int id)
+        public Book Remove(int id)
         {
             var book = _context.Books.Find(id);
             if (book != null)
             {
                 _context.Books.Remove(book);
             }
+
+            return book;
         }
 
         public void Save()

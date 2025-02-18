@@ -10,9 +10,9 @@ namespace BookManagement.Interfaces
     {
         IEnumerable<Book> GetAll();
         Book GetById(int id);
-        void Add(Book book);
-        void Update(Book book);
-        void Remove(int id);
+        Book Add(Book book);
+        Book Update(Book book);
+        Book Remove(int id);
         void Save();
 
         IEnumerable<Book> GetBooksWithPagination(int page, int pageSize);
