@@ -2,17 +2,19 @@
 using System.Net;
 using System.Web.Mvc;
 using Models.Models;
-using Services.Interfaces;
+using Services.Services;
 
 namespace BookManagement.Controllers
 {
     public class BookController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly ICategoryService _categoryService;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, ICategoryService categoryService)
         {
             _bookService = bookService;
+            _categoryService = categoryService;
         }
 
         // GET: Book
@@ -30,13 +32,15 @@ namespace BookManagement.Controllers
         // GET: Book/Create
         public ActionResult Create()
         {
+            var categories = _categoryService.GetAll();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View();
         }
 
         // POST: Book/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Book book)
+        public ActionResult Create([Bind(Include = "Title,Author,PublishedDate,Price,CategoryId")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -44,8 +48,12 @@ namespace BookManagement.Controllers
                 return RedirectToAction("Index");
             }
 
+            // Get categories to render again when ModelState failed
+            var categories = _categoryService.GetAll();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(book);
         }
+
 
         // GET: Book/Edit/5
         public ActionResult Edit(int? id, int page = 1)
@@ -61,6 +69,8 @@ namespace BookManagement.Controllers
                 return HttpNotFound();
             }
 
+            var categories = _categoryService.GetAll();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
             ViewBag.CurrentPage = page;
             return View(book);
         }
@@ -68,7 +78,7 @@ namespace BookManagement.Controllers
         // POST: Book/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Book book, int page = 1)
+        public ActionResult Edit([Bind(Include = "Id,Title,Author,PublishedDate,Price")] Book book, int page = 1)
         {
             if (ModelState.IsValid)
             {
@@ -76,6 +86,9 @@ namespace BookManagement.Controllers
                 return RedirectToAction("Index", new { page = page });
             }
 
+            // Get categories to render again when ModelState failed
+            var categories = _categoryService.GetAll();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(book);
         }
 

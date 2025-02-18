@@ -1,7 +1,6 @@
 using Infrastructure.Interfaces;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
-using Services.Interfaces;
 using Services.Services;
 using System.Web.Mvc;
 using Unity;
@@ -15,9 +14,11 @@ namespace BookManagement
         {
 			var container = new UnityContainer();
 
-            container.RegisterType<IBookRepository, BookRepository>();
             container.RegisterType<IUnitOfWork, BookUnitOfWork>();
+            container.RegisterType<IBookRepository, BookRepository>();
             container.RegisterType<IBookService, BookService>();
+            container.RegisterType<ICategoryRepository, CategoryRepository>();
+            container.RegisterType<ICategoryService, CategoryService>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

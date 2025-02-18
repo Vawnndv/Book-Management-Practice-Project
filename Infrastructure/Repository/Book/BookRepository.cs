@@ -18,7 +18,7 @@ namespace Infrastructure.Repository
 
         public IEnumerable<Book> GetAll()
         {
-            return _context.Books.OrderByDescending(b => b.Id).ToList();
+            return _context.Books.Include(c => c.Category).OrderByDescending(b => b.Id).ToList();
         }
 
         public Book GetById(int id)
@@ -56,7 +56,8 @@ namespace Infrastructure.Repository
 
         public IEnumerable<Book> GetBooksWithPagination(int page, int pageSize)
         {
-            return _context.Books.OrderByDescending(b => b.Id)
+            return _context.Books.Include(c => c.Category)
+                                 .OrderByDescending(b => b.Id)
                                  .Skip((page - 1) * pageSize)
                                  .Take(pageSize)
                                  .ToList();

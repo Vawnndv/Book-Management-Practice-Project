@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 
 namespace Models.Models
@@ -24,5 +25,8 @@ namespace Models.Models
         [Range(1, 1000)]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
+
+        public int? CategoryId { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

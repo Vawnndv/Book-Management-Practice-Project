@@ -10,7 +10,7 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "BookManagement.Models.BookDbContext";
+            ContextKey = "Infrastructure.Data.BookDbContext";
         }
 
         protected override void Seed(Infrastructure.Data.BookDbContext context)

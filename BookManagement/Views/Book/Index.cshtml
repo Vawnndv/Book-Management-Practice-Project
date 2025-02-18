@@ -17,6 +17,7 @@
             <th>Author</th>
             <th>PublishedDate</th>
             <th>Price</th>
+            <th>Category</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -28,6 +29,7 @@
             <td>@book.Author</td>
             <td>@book.PublishedDate.ToString("yyyy-MM-dd")</td>
             <td>@book.Price.ToString("C")</td>
+            <td>@(book.Category?.Name ?? string.Empty)</td>
             <td>
                 <a href="@Url.Action("Edit", "Book" , new { id=book.Id, page=ViewBag.CurrentPage })" class="btn btn-warning">Edit</a>
                 @*<a href="@Url.Action("Delete", "Book" , new { id=book.Id })" class="btn btn-danger">Delete</a>*@

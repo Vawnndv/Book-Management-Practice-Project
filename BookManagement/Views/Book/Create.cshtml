@@ -29,6 +29,12 @@
     </div>
 
     <div class="form-group mt-2">
+        @Html.LabelFor(m => m.CategoryId)
+        @Html.DropDownListFor(m => m.CategoryId, (SelectList)ViewBag.Categories, "Select Category", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group mt-2">
         @Html.LabelFor(m => m.Price)
         @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
         @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
