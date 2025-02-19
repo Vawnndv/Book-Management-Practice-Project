@@ -78,7 +78,7 @@ namespace BookManagement.Controllers
         // POST: Book/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Author,PublishedDate,Price")] Book book, int page = 1)
+        public ActionResult Edit([Bind(Include = "Id,Title,Author,PublishedDate,Price,CategoryId")] Book book, int page = 1)
         {
             if (ModelState.IsValid)
             {
