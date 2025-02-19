@@ -24,86 +24,49 @@
     <tbody>
         @foreach (var book in Model)
         {
-        <tr>
-            <td>@book.Title</td>
-            <td>@book.Author</td>
-            <td>@book.PublishedDate.ToString("yyyy-MM-dd")</td>
-            <td>@book.Price.ToString("C")</td>
-            <td>@(book.Category?.Name ?? string.Empty)</td>
-            <td>
-                <a href="@Url.Action("Edit", "Book" , new { id=book.Id, page=ViewBag.CurrentPage })" class="btn btn-warning">Edit</a>
-                @*<a href="@Url.Action("Delete", "Book" , new { id=book.Id })" class="btn btn-danger">Delete</a>*@
-                <a href="javascript:void(0);" class="btn btn-danger delete-btn" data-id="@book.Id" data-title="@book.Title">Delete</a>
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.PublishedDate.ToString("yyyy-MM-dd")</td>
+                <td>@book.Price.ToString("C")</td>
+                <td>@(book.Category?.Name ?? string.Empty)</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Book" , new { id=book.Id, page=ViewBag.CurrentPage })" class="btn btn-warning">Edit</a>
+                    @*<a href="@Url.Action("Delete", "Book" , new { id=book.Id })" class="btn btn-danger">Delete</a>*@
+                    <a href="javascript:void(0);" class="btn btn-danger delete-btn" data-id="@book.Id" data-title="@book.Title" data-type="Book">Delete</a>
 
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
 
 @if (ViewBag.TotalPages > 1)
 {
-<div>
-    <nav>
-        <ul class="pagination">
-            <li class="page-item @(ViewBag.CurrentPage == 1 ? " disabled" : "" )">
-                <a class="page-link" href="@Url.Action("Index", "Book" , new { page=ViewBag.CurrentPage - 1 })" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                </a>
-            </li>
-            @for (int i = 1; i <= ViewBag.TotalPages; i++)
-            {
-            <li class="page-item @(ViewBag.CurrentPage == i ? " active" : "" )">
-                <a class="page-link" href="@Url.Action("Index", "Book" , new { page=i })">@i</a>
-            </li>
-            }
-            <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? " disabled" : "" )">
-                <a class="page-link" href="@Url.Action("Index", "Book" , new { page=ViewBag.CurrentPage + 1 })" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+    <div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? " disabled" : "" )">
+                    <a class="page-link" href="@Url.Action("Index", "Book" , new { page=ViewBag.CurrentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? " active" : "" )">
+                        <a class="page-link" href="@Url.Action("Index", "Book" , new { page=i })">@i</a>
+                    </li>
+                }
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? " disabled" : "" )">
+                    <a class="page-link" href="@Url.Action("Index", "Book" , new { page=ViewBag.CurrentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 }
 
-@Html.Partial("_DeleteConfirmation")
-
-@section Scripts {
-<script>
-    $('.delete-btn').click(function () {
-        var bookId = $(this).data('id');
-        var bookTitle = $(this).data('title');
-
-        $('#deleteConfirmationModal').modal('show');
-
-        $('#deleteConfirmationModal').data('id', bookId);
-        $('#deleteConfirmationModal').data('title', bookTitle);
-        // Update title in modal
-        $('#deleteConfirmationModal .title-confirm-delete strong').text(bookTitle);
-    });
-
-    $('#confirmDelete').click(function () {
-        var bookId = $('#deleteConfirmationModal').data('id');
-        $.ajax({
-            url: '@Url.Action("Delete", "Book")',
-            type: 'POST',
-            data: { id: bookId },
-            success: function (response) {
-                $('#deleteConfirmationModal').modal('hide');
-                location.reload(); // Update record but not reload the page
-            },
-            error: function (xhr, status, error) {
-                alert('Error: ' + error);
-            }
-        });
-    });
-
-    $('.cancelDelete').click(function () {
-        $('#deleteConfirmationModal').modal('hide');
-    });
-</script>
-}
-
+@Html.Partial("~/Views/Shared/Components/_DeleteConfirmation.cshtml")

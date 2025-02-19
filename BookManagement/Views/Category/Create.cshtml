@@ -1,0 +1,21 @@
+﻿@model Models.Models.Category
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create a new category";
+}
+
+<h2>Create new category</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group mt-2">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Save</button>
+    <a href="@Url.Action("Index", "Book")" class="btn btn-default mt-2">Cancel</a>
+}

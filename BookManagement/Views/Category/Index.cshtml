@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Models.Models.Category>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Category Management";
+}
+
+<div class="my-3 d-md-flex justify-content-between">
+    <h2>Category Management</h2>
+
+    <a href="@Url.Action("Create", "Category" )" class="btn btn-primary my-1">Create</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            var category = Model.ElementAt(i);
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Category" , new { id=category.Id, page=ViewBag.CurrentPage })" class="btn btn-warning">Edit</a>
+                    <a href="javascript:void(0);" class="btn btn-danger delete-btn" data-id="@category.Id" data-title="@category.Name" data-type="Category">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.TotalPages > 1)
+{
+    <div>
+        <nav>
+            <ul class="pagination">
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? " disabled" : "" )">
+                    <a class="page-link" href="@Url.Action("Index", "Category" , new { page=ViewBag.CurrentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? " active" : "" )">
+                        <a class="page-link" href="@Url.Action("Index", "Category" , new { page=i })">@i</a>
+                    </li>
+                }
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? " disabled" : "" )">
+                    <a class="page-link" href="@Url.Action("Index", "Category" , new { page=ViewBag.CurrentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+}
+
+@Html.Partial("~/Views/Shared/Components/_DeleteConfirmation.cshtml")

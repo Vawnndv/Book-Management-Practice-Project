@@ -1,0 +1,23 @@
+﻿@model Models.Models.Category
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit Category";
+}
+
+<h2>Edit category</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Update</button>
+    <a href="@Url.Action("Index", "Category")" class="btn btn-default mt-3">Cancel</a>
+}
+
+<input type="hidden" name="page" value="@ViewBag.CurrentPage" />
