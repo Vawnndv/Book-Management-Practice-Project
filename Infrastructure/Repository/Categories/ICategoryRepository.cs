@@ -19,5 +19,6 @@ namespace Infrastructure.Repository
         IEnumerable<Category> GetCategoriesWithPagination(int page, int pageSize);
         int GetTotalCategoriesCount();
         bool CategoryExists(string name);
+        IEnumerable<Book> GetBooksByCategoryId(int categoryId);
     }
 }

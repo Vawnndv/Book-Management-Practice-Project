@@ -25,6 +25,8 @@ namespace BookManagement.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalCategories / Constants.PageSize);
 
+            string message = TempData["ErrorMessage"] as string;
+            TempData["ErrorMessage"] = message;
             return View(categories);
         }
 
@@ -113,12 +115,31 @@ namespace BookManagement.Controllers
             return View(category);
         }
 
-        // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            _categoryService.DeleteCategory(id);
-            return RedirectToAction("Index");
+            try
+            {
+                var category = _categoryService.GetCategoryById(id);
+                if (category != null)
+                {
+                    var dependentBooks = _categoryService.GetBooksByCategoryId(id);
+                    if (dependentBooks.Any())
+                    {
+                        TempData["ErrorMessage"] = "This category is associated with one or more books and cannot be deleted.";
+                        return RedirectToAction("Index");
+                    }
+                    _categoryService.DeleteCategory(id);
+                    return RedirectToAction("Index");
+                }
+                return HttpNotFound();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
+
     }
 }

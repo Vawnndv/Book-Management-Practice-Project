@@ -15,10 +15,10 @@
         $(".confirmDelete").attr("id", "confirmDeleteCategory");
     }
 
-    $('#confirmDeleteBook').off('click').on('click', function () {
+    $('#confirmDeleteBook').off('click').one('click', function () {
         var bookId = $('#deleteConfirmationModal').data('id');
         $.ajax({
-            url: '/Book/Delete',
+            url: '<%= Url.Action("Delete", "Book") %>',
             type: 'POST',
             data: { id: bookId },
             success: function (response) {
@@ -31,10 +31,10 @@
         });
     });
 
-    $('#confirmDeleteCategory').off('click').on('click', function () {
+    $('#confirmDeleteCategory').off('click').one('click', function () {
         var categoryId = $('#deleteConfirmationModal').data('id');
         $.ajax({
-            url: '/Category/Delete',
+            url: '<%= Url.Action("Delete", "Category") %>',
             type: 'POST',
             data: { id: categoryId },
             success: function (response) {
@@ -50,4 +50,11 @@
 
 $('.cancelDelete').click(function () {
     $('#deleteConfirmationModal').modal('hide');
+});
+
+
+$(document).ready(function () {
+    var toastEl = $('#errorToast')[0];
+    var toast = new bootstrap.Toast(toastEl);
+    toast.show();
 });

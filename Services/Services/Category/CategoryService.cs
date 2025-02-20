@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Interfaces;
+using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using Models.Models;
 using System;
@@ -69,6 +70,11 @@ namespace Services.Services
         private bool CategoryExists(string name)
         {
             return _unitOfWork.CategoryRepository.CategoryExists(name);
+        }
+
+        public IEnumerable<Book> GetBooksByCategoryId(int categoryId)
+        {
+            return _unitOfWork.CategoryRepository.GetBooksByCategoryId(categoryId);
         }
     }
 }
