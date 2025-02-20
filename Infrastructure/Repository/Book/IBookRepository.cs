@@ -14,9 +14,7 @@ namespace Infrastructure.Interfaces
         Book Update(Book book);
         Book Remove(int id);
         void Save();
-
         IEnumerable<Book> GetBooksWithPagination(int page, int pageSize);
         int GetTotalBooksCount();
     }
-
 }

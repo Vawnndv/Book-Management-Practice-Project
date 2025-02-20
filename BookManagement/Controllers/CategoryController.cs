@@ -1,6 +1,7 @@
 ﻿using Models.Models;
 using Services.Services;
 using System;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 
@@ -42,14 +43,19 @@ namespace BookManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _categoryService.AddCategory(category);
-                return RedirectToAction("Index");
+                try
+                {
+                    _categoryService.AddCategory(category);
+                    return RedirectToAction("Index");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    ModelState.AddModelError("Name", ex.Message);
+                }
             }
 
-            // Get categories to render again when ModelState failed
             return View(category);
         }
-
 
         // GET: Category/Edit/5
         public ActionResult Edit(int? id, int page = 1)
@@ -76,8 +82,15 @@ namespace BookManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                _categoryService.UpdateCategory(category);
-                return RedirectToAction("Index", new { page = page });
+                try
+                {
+                    _categoryService.UpdateCategory(category);
+                    return RedirectToAction("Index", new { page = page });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    ModelState.AddModelError("Name", ex.Message);
+                }
             }
 
             return View(category);

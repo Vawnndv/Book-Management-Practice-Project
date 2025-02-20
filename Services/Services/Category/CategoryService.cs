@@ -40,12 +40,22 @@ namespace Services.Services
 
         public void AddCategory(Category category)
         {
+            if (CategoryExists(category.Name))
+            {
+                throw new InvalidOperationException("Category name already exists.");
+            }
+
             _unitOfWork.CategoryRepository.Add(category);
             _unitOfWork.Complete();
         }
 
         public void UpdateCategory(Category category)
         {
+            if (CategoryExists(category.Name))
+            {
+                throw new InvalidOperationException("Category name already exists.");
+            }
+
             _unitOfWork.CategoryRepository.Update(category);
             _unitOfWork.Complete();
         }
@@ -54,6 +64,11 @@ namespace Services.Services
         {
             _unitOfWork.CategoryRepository.Remove(id);
             _unitOfWork.Complete();
+        }
+
+        private bool CategoryExists(string name)
+        {
+            return _unitOfWork.CategoryRepository.CategoryExists(name);
         }
     }
 }

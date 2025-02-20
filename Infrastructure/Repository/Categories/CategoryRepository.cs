@@ -20,7 +20,7 @@ namespace Infrastructure.Repository
 
         public IEnumerable<Category> GetAll()
         {
-            return _context.Categories.ToList();
+            return _context.Categories.OrderBy(n => n.Name).ToList();
         }
 
         public Category GetById(int id)
@@ -67,6 +67,11 @@ namespace Infrastructure.Repository
         public int GetTotalCategoriesCount()
         {
             return _context.Categories.Count();
+        }
+
+        public bool CategoryExists(string name)
+        {
+            return _context.Categories.Any(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

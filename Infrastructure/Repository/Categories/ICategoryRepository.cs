@@ -18,5 +18,6 @@ namespace Infrastructure.Repository
 
         IEnumerable<Category> GetCategoriesWithPagination(int page, int pageSize);
         int GetTotalCategoriesCount();
+        bool CategoryExists(string name);
     }
 }
