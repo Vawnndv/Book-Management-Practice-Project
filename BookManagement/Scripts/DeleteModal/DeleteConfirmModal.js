@@ -18,7 +18,7 @@
     $('#confirmDeleteBook').off('click').one('click', function () {
         var bookId = $('#deleteConfirmationModal').data('id');
         $.ajax({
-            url: '<%= Url.Action("Delete", "Book") %>',
+            url: 'Book/Delete',
             type: 'POST',
             data: { id: bookId },
             success: function (response) {
@@ -34,7 +34,7 @@
     $('#confirmDeleteCategory').off('click').one('click', function () {
         var categoryId = $('#deleteConfirmationModal').data('id');
         $.ajax({
-            url: '<%= Url.Action("Delete", "Category") %>',
+            url: 'Category/Delete',
             type: 'POST',
             data: { id: categoryId },
             success: function (response) {

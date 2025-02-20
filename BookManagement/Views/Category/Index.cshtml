@@ -30,7 +30,7 @@
                 <td>
                     <a href="@Url.Action("Edit", "Category" , new { id=category.Id, page=ViewBag.CurrentPage })" class="btn btn-warning">Edit</a>
                     @*<a href="javascript:void(0);" class="btn btn-danger delete-btn" data-id="@category.Id" data-title="@category.Name" data-type="Category">Delete</a>*@
-                    <a href="@Url.Action("Delete", "Book" , new { id=category.Id })" class="btn btn-danger">Delete</a>
+                    <a href="@Url.Action("Delete", "Category" , new { id=category.Id })" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }
