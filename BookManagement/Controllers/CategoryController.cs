@@ -3,6 +3,7 @@ using Services.Services;
 using System;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace BookManagement.Controllers
@@ -47,6 +48,8 @@ namespace BookManagement.Controllers
             {
                 try
                 {
+                    category.Name = category.Name.Trim();
+
                     _categoryService.AddCategory(category);
                     return RedirectToAction("Index");
                 }
@@ -86,6 +89,8 @@ namespace BookManagement.Controllers
             {
                 try
                 {
+                    category.Name = category.Name.Trim();
+
                     _categoryService.UpdateCategory(category);
                     return RedirectToAction("Index", new { page = page });
                 }
