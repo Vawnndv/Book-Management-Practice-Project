@@ -1,0 +1,17 @@
+﻿@model Models.Models.Category
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Delete Category";
+}
+
+<h2>Delete category</h2>
+
+<div>
+    <p>Are you sure delete <strong>@Model.Name</strong> category?</p>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="@Url.Action("Index", "Category")" class="btn btn-default">Cancel</a>
+    }
+</div>

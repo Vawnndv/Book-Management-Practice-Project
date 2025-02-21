@@ -3,6 +3,7 @@ using Services.Services;
 using System;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 
 namespace BookManagement.Controllers
@@ -25,6 +26,8 @@ namespace BookManagement.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalCategories / Constants.PageSize);
 
+            string message = TempData["ErrorMessage"] as string;
+            TempData["ErrorMessage"] = message;
             return View(categories);
         }
 
@@ -45,6 +48,8 @@ namespace BookManagement.Controllers
             {
                 try
                 {
+                    category.Name = category.Name.Trim();
+
                     _categoryService.AddCategory(category);
                     return RedirectToAction("Index");
                 }
@@ -84,6 +89,8 @@ namespace BookManagement.Controllers
             {
                 try
                 {
+                    category.Name = category.Name.Trim();
+
                     _categoryService.UpdateCategory(category);
                     return RedirectToAction("Index", new { page = page });
                 }
@@ -113,12 +120,31 @@ namespace BookManagement.Controllers
             return View(category);
         }
 
-        // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            _categoryService.DeleteCategory(id);
-            return RedirectToAction("Index");
+            try
+            {
+                var category = _categoryService.GetCategoryById(id);
+                if (category != null)
+                {
+                    var dependentBooks = _categoryService.GetBooksByCategoryId(id);
+                    if (dependentBooks.Any())
+                    {
+                        TempData["ErrorMessage"] = "This category is associated with one or more books and cannot be deleted.";
+                        return RedirectToAction("Index");
+                    }
+                    _categoryService.DeleteCategory(id);
+                    return RedirectToAction("Index");
+                }
+                return HttpNotFound();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An error occurred: " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
+
     }
 }

@@ -1,4 +1,10 @@
-﻿$('.delete-btn').click(function () {
+﻿
+AddAntiForgeryToken = function (data) {
+    data.__RequestVerificationToken = $('#__AjaxAntiForgeryForm input[name=__RequestVerificationToken]').val();
+    return data;
+};
+
+$('.delete-btn').click(function () {
     var id = $(this).data('id');
     var title = $(this).data('title');
     var type = $(this).data('type');
@@ -15,15 +21,15 @@
         $(".confirmDelete").attr("id", "confirmDeleteCategory");
     }
 
-    $('#confirmDeleteBook').off('click').on('click', function () {
+    $('#confirmDeleteBook').off('click').one('click', function () {
         var bookId = $('#deleteConfirmationModal').data('id');
         $.ajax({
             url: '/Book/Delete',
             type: 'POST',
-            data: { id: bookId },
+            data: AddAntiForgeryToken({ id: bookId }),
             success: function (response) {
                 $('#deleteConfirmationModal').modal('hide');
-                location.reload(); // Update record but not reload the page
+                location.reload();
             },
             error: function (xhr, status, error) {
                 alert('Error: ' + error);
@@ -31,15 +37,34 @@
         });
     });
 
-    $('#confirmDeleteCategory').off('click').on('click', function () {
+    $('#confirmDeleteCategory').off('click').one('click', function () {
         var categoryId = $('#deleteConfirmationModal').data('id');
         $.ajax({
             url: '/Category/Delete',
             type: 'POST',
-            data: { id: categoryId },
+            async: false,
+            data: AddAntiForgeryToken({ id: categoryId }),
             success: function (response) {
                 $('#deleteConfirmationModal').modal('hide');
-                location.reload(); // Update record but not reload the page
+                location.reload();
+                //console.log(response);
+                //$('#book-content').html(response.asdasdas);
+
+                //var categoriesTableBody = '';
+
+                //$.each(response.categories, function (index, category) {
+                //    categoriesTableBody += '<tr>';
+                //    categoriesTableBody += '<td>' + (index + 1) + '</td>';
+                //    categoriesTableBody += '<td>' + category.Id + '</td>';
+                //    categoriesTableBody += '<td>' + category.Name + '</td>';
+                //    categoriesTableBody += '<td>';
+                //    categoriesTableBody += '<a href="/Category/Edit/' + category.Id + '" class="btn btn-warning">Edit</a>';
+                //    categoriesTableBody += '<a href="javascript:void(0);" class="btn btn-danger delete-btn" data-id="' + category.Id + '" data-title="' + category.Name + '" data-type="Category">Delete</a>';
+                //    categoriesTableBody += '</td>';
+                //    categoriesTableBody += '</tr>';
+                //});
+
+                //$('table tbody').html(categoriesTableBody);
             },
             error: function (xhr, status, error) {
                 alert('Error: ' + error);
@@ -50,4 +75,11 @@
 
 $('.cancelDelete').click(function () {
     $('#deleteConfirmationModal').modal('hide');
+});
+
+
+$(document).ready(function () {
+    var toastEl = $('#errorToast')[0];
+    var toast = new bootstrap.Toast(toastEl);
+    toast.show();
 });

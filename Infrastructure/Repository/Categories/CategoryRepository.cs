@@ -71,7 +71,13 @@ namespace Infrastructure.Repository
 
         public bool CategoryExists(string name)
         {
-            return _context.Categories.Any(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            return _context.Categories.Any(c => c.Name.ToLower().Equals(name.ToLower(), StringComparison.OrdinalIgnoreCase));
         }
+
+        public IEnumerable<Book> GetBooksByCategoryId(int categoryId)
+        {
+            return _context.Books.Where(b => b.CategoryId == categoryId).ToList();
+        }
+
     }
 }
