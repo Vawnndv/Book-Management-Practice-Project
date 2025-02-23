@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Models.Models.Book>
+﻿@using Models.Models
+@model IEnumerable<Models.Models.Book>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Book Management";
@@ -68,3 +69,9 @@
         </nav>
     </div>
 }
+
+
+@{
+    var deleteModel = new DeleteViewModel { Controller = "Book", ItemType = "book" };
+}
+@Html.Partial("Components/_DeleteConfirmation", deleteModel)

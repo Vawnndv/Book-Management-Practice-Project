@@ -1,4 +1,6 @@
-﻿<div class="modal" tabindex="-1" role="dialog" id="deleteConfirmationModal">
+﻿@model Models.Models.DeleteViewModel
+
+<div class="modal" tabindex="-1" role="dialog" id="deleteConfirmationModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,11 +8,10 @@
                 <button type="button" class="btn-close cancelDelete" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body title-confirm-delete">
-                <p></p>
+                <p>Are you sure you want to delete this @Model.ItemType?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary cancelDelete">Cancel</button>
-                <button type="button" class="btn btn-danger confirmDelete">Delete</button>
+                @Html.Partial("Components/_DeleteForm", Model)
             </div>
         </div>
     </div>
